@@ -10,8 +10,14 @@ Solution:
 Using a heap, each new element would incur an O(logk) cost.
 This solution gives an amortized O(1) cost.
 
+>>> list(window_min([1, 2, 3], 1))
+[1, 2, 3]
+
 >>> list(window_min([10, 9, 8, 10, 11, 15, 12, 13, 7, 16], 3))
 [10, 9, 8, 8, 8, 10, 11, 12, 7, 7]
+
+>>> list(window_min([8, 9, 10, 8, 9], 3))
+[8, 8, 8, 8, 8]
 
 """
 from collections import namedtuple, deque
@@ -35,7 +41,8 @@ def window_min(iterable, k):
             head = candidates[0]
             while head.position < window_position and candidates:
                 candidates.popleft()
-                head = candidates[0]
+                if candidates:
+                    head = candidates[0]
 
         # removing non-candidates from tail
         if candidates:
@@ -49,7 +56,6 @@ def window_min(iterable, k):
         counter += 1
 
         yield candidates[0].value
-
 
 if __name__ == "__main__":
     import doctest
